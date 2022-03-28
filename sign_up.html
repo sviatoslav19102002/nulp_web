@@ -1,45 +1,95 @@
 <!DOCTYPE html>
-<html>
-<link rel="stylesheet" href="css/style.css">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <link rel="stylesheet" href="scss/sing_up.css">
+    <script src="js/sign_up.js" defer></script>
+</head>
 <body>
-    <h1>Sign Up for Free</h1>
-    <form action="edit_user.html">
-    <div class="top-row">
-        <div class="field-wrap">
-            <label>
-                First Name<span class="req">*</span>
-            </label>
-            <input type="text" required autocomplete="off" />
+<!--<h1>Sign Up for Free</h1>-->
+<!--<form class="form">-->
+<!--    <div class="top-row">-->
+<!--        <div class="field-wrap">-->
+<!--            <label>-->
+<!--                First Name<span class="req">*</span>-->
+<!--            </label>-->
+<!--            <input id="first_name" type="text" required autocomplete="off"/>-->
+<!--        </div>-->
+
+<!--        <div class="field-wrap">-->
+<!--            <label>-->
+<!--                Last Name<span class="req">*</span>-->
+<!--            </label>-->
+<!--            <input id="second_name" type="text" required autocomplete="off"/>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="field-wrap">-->
+<!--        <label>-->
+<!--            Username<span class="req">*</span>-->
+<!--        </label>-->
+<!--        <input id="username" type="text" required autocomplete="off"/>-->
+<!--    </div>-->
+
+<!--    <div class="field-wrap">-->
+<!--        <label>-->
+<!--            Email Address<span class="req">*</span>-->
+<!--        </label>-->
+<!--        <input id="email" type="email" required autocomplete="off"/>-->
+<!--    </div>-->
+
+<!--    <div class="field-wrap">-->
+<!--        <label>-->
+<!--            Set A Password<span class="req">*</span>-->
+<!--        </label>-->
+<!--        <input id="password" type="password" required autocomplete="off"/>-->
+<!--    </div>-->
+
+<!--    <div class="tab-group">-->
+<!--        <input class="button" type="submit" value="Sign Up"/>-->
+<!--    </div>-->
+<!--</form>-->
+<!--<div class="tab-group">-->
+<!--    <a href="login.html"><input class="button" type="submit" value="Log In"/></a>-->
+<!--</div>-->
+<div class="modal">
+    <div class="modal-container">
+        <div class="modal-left">
+            <h1 class="modal-title">Welcome</h1>
+            <p class="modal-desc">Get your wallet up!</p>
+            <form id="signup-form">
+                <div class="input-block">
+                    <label for="first_name" class="input-label">Firstname</label>
+                    <input type="text" name="first_name" id="first_name" placeholder="Firstname" required>
+                </div>
+                <div class="input-block">
+                    <label for="second_name" class="input-label">Lastname</label>
+                    <input type="text" name="second_name" id="second_name" placeholder="Lastname" required>
+                </div>
+                <div class="input-block">
+                    <label for="username" class="input-label">Username</label>
+                    <input type="text" name="username" id="username" placeholder="Username" required>
+                </div>
+                <div class="input-block">
+                    <label for="email" class="input-label">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="input-block">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                </div>
+                <div class="modal-buttons">
+                    <input class="input-button" type="submit" value="Sign Up"/>
+                </div>
+            </form>
+            <p class="sign-up">Are you already have account? <a href="login.html">Login now</a></p>
         </div>
-
-        <div class="field-wrap">
-            <label>
-                Last Name<span class="req">*</span>
-            </label>
-            <input type="text"required autocomplete="off"/>
+        <div class="modal-right">
+            <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dfd2ec5a01006fd8c4d7592a381d3776&auto=format&fit=crop&w=1000&q=80"
+                 alt="">
         </div>
     </div>
-
-    <div class="field-wrap">
-        <label>
-            Email Address<span class="req">*</span>
-        </label>
-        <input type="email"required autocomplete="off"/>
-    </div>
-
-    <div class="field-wrap">
-        <label>
-            Set A Password<span class="req">*</span>
-        </label>
-        <input type="password"required autocomplete="off"/>
-    </div>
-
-    <div class="tab-group">
-        <p><a href="edit_user.html"><input class="button" type="submit" value="Sign Up" /></a></p>
-    </div>
-    </form>
-    <div class="tab-group">
-        <a href="login.html"><input class="button" type="submit" value="Log In" /></a>
-    </div>
+</div>
 </body>
 </html>
