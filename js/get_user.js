@@ -21,8 +21,6 @@ async function getHandler() {
     document.getElementById('username').innerHTML = `${responseText.first_name} ${responseText.second_name}`;
     return true;
   }
-
-  // errorText.innerText = responseText.message;
   return false;
 }
 
