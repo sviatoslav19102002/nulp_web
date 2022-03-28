@@ -2,12 +2,13 @@ const button = document.querySelector('.input-button');
 const form = document.querySelector('#login-form');
 
 function loginUser(body) {
+  const headers = new Headers();
+  headers.set('Authorization', `Basic ${btoa(`${body.username}:${body.password}`)}`);
+  headers.set('content-type', 'application/json');
   return fetch('http://localhost:8080/api/v1/auth/login', {
     method: 'POST',
     body: JSON.stringify(body),
-    headers: new Headers({
-      'content-type': 'application/json',
-    }),
+    headers,
   });
 }
 
@@ -28,14 +29,12 @@ async function buttonHandler(event) {
         if (!response.ok) {
           throw new Error(await response.text());
         }
-        return response.text();
-      })
-      .then(() => {
         window.localStorage.setItem('current_user', JSON.stringify(entry));
         window.location.href = 'edit_user.html';
+        return response.text();
       })
-      .catch((error) => {
-        console.log(`Fetch error: ${error}`);
+      .catch(() => {
+        alert('Provided username or password does not exist!');
       });
   }
 }
