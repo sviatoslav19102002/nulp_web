@@ -1,0 +1,37 @@
+<form [formGroup]="form" (submit)="submit()" class="card text-white bg-dark mb-3 own-style">
+  <fieldset>
+    <legend>User Page</legend>
+    <div class="form-group">
+      <label for="first_name_user_page" class="form-label mt-4">First name</label>
+      <p *ngIf="!isEditable">{{user.first_name}}</p>
+      <input *ngIf="isEditable" formControlName="first_name" type="text" class="form-control" placeholder="First name..." id="first_name_user_page" value="{{user.first_name}}">
+    </div>
+    <div class="form-group">
+      <label for="second_name_user_page" class="form-label mt-4">Second name</label>
+      <p *ngIf="!isEditable">{{user.second_name}}</p>
+      <input *ngIf="isEditable" formControlName="second_name" type="text" class="form-control" placeholder="Second name..." id="second_name_user_page" value="{{user.second_name}}">
+    </div>
+    <div class="form-group">
+      <label for="username_user_page" class="form-label mt-4">Username</label>
+      <p *ngIf="!isEditable">{{user.username}}</p>
+      <input *ngIf="isEditable" formControlName="username" type="text" class="form-control" placeholder="Username..." id="username_user_page" value="{{user.username}}">
+    </div>
+    <div class="form-group">
+      <label for="email_user_page" class="form-label mt-4">Email</label>
+      <p *ngIf="!isEditable">{{user.email}}</p>
+      <input *ngIf="isEditable" formControlName="email" type="text" class="form-control" placeholder="Email..." id="email_user_page" value="{{user.email}}">
+    </div>
+    <div *ngIf="isEditable" class="form-group">
+      <label for="password_user_page" class="form-label mt-4">Password</label>
+      <input formControlName="password" type="password" class="form-control" placeholder="Password..." id="password_user_page">
+    </div>
+    <div *ngIf="!isEditable" class="d-grid gap-2">
+      <button class="btn btn-lg btn-primary" type="button" (click)="changeEditableState()">Edit user's info</button>
+    </div>
+    <div *ngIf="isEditable" class="d-grid gap-2">
+      <button class="btn btn-lg btn-primary" type="submit">Save</button>
+      <button class="btn btn-lg btn-primary" type="button" (click)="changeEditableState()">Cancel</button>
+      <button class="btn btn-lg btn-primary" type="button" (click)="delete()">Delete</button>
+    </div>
+  </fieldset>
+</form>
