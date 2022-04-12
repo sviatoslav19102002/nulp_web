@@ -1,63 +1,32 @@
 <!DOCTYPE html>
-<html>
-<link rel="stylesheet" href="css/style.css">
-
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+    <link rel="stylesheet" href="scss/edit_user.css">
+    <script src="js/delete_user.js" defer></script>
+    <script src="js/logout.js" defer></script>
+    <script src="js/get_user.js"></script>
+</head>
 <body>
-    <h1>User Edit Form</h1>
-    <form action="">
-    <div class="field-wrap">
-        <label>
-            Email Address<span class="req">*</span>
-        </label>
-        <input type="email"required autocomplete="off"/>
+<div class="modal">
+    <div class="card">
+        <img src="images/profile_logo.jpg" alt="Logo" style="width:100%">
+        <h1 id="username">John Doe</h1>
+        <p class="title">Job TBD</p>
+        <p>Polytechnic University</p>
+        <form class="delete">
+            <p>
+                <input class="button" type="submit" value="Delete account"/>
+            </p>
+        </form>
+        <form class="logout">
+            <p>
+                <input class="button" type="submit" value="Logout"/>
+            </p>
+        </form>
     </div>
-    <div class="field-wrap">
-        <label>
-            Password<span class="req">*</span>
-        </label>
-        <input type="password"required autocomplete="off"/>
-    </div>
-    <div class="field-wrap">
-        <label>
-            Re-type Password<span class="req">*</span>
-        </label>
-        <input type="password"required autocomplete="off"/>
-    </div>
-    <div class="top-row">
-        <div class="field-wrap">
-            <label>
-                First Name<span class="req">*</span>
-            </label>
-            <input type="text" required autocomplete="off" />
-        </div>
-
-        <div class="field-wrap">
-            <label>
-                Last Name<span class="req">*</span>
-            </label>
-            <input type="text"required autocomplete="off"/>
-        </div>
-    </div>
-
-    <div class="top-row">
-        <div class="form_radio">
-            <input class="input_radio" id="radio-1" type="radio" name="radio" value="1" checked>
-            <label class="label_radio" for="radio-1">Admin</label>
-        </div>
-
-        <div class="form_radio">
-            <input class="input_radio" id="radio-2" type="radio" name="radio" value="2">
-            <label class="label_radio" for="radio-2">Regular</label>
-        </div>
-    </div>
-
-        <div class="tab-group">
-            <p><input class="button" type="submit" value="Save" /></p>
-        </div>
-    </form>
-    <div class="tab-group">
-        <a href="login.html"><input class="button" type="submit" value="Log Out" /></a>
-    </div>
+</div>
 </body>
 
 </html>
