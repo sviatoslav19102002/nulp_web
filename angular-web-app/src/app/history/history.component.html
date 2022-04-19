@@ -1,0 +1,17 @@
+<h1>Transfer History</h1>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Type</th>
+    <th scope="col">Purpose</th>
+    <th scope="col">Amount</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="table-active" *ngFor="let x of hist_table">
+    <th scope="row">Complete</th>
+    <td>{{x.purpose}}</td>
+    <td>{{x.amount}}</td>
+  </tr>
+  </tbody>
+</table>

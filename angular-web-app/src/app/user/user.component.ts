@@ -82,7 +82,6 @@ export class UserComponent implements OnInit {
     }).subscribe({
       next: ()=>{
         this.router.navigate(['/']);
-        console.log('i am here')
         this.cookie.clearCookie('user');
         this.cookie.clearCookie('credentials');
       },

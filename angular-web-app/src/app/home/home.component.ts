@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkAuth();
+    this.checkWallet();
   }
 
   checkAuth(){
@@ -20,6 +21,14 @@ export class HomeComponent implements OnInit {
       EmitterService.authEmitter.emit(true);
     }else {
       EmitterService.authEmitter.emit(false);
+    }
+  }
+
+  checkWallet(){
+    if(this.cookie.getCookie('wallet')){
+      EmitterService.walletEmitter.emit(true);
+    }else {
+      EmitterService.walletEmitter.emit(false);
     }
   }
 }
