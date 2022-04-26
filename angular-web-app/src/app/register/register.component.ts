@@ -34,7 +34,6 @@ export class RegisterComponent implements OnInit {
         this.cookie.setCookie('credentials',
           '{"password":"'+this.form.getRawValue().password+'", "username":"'+this.form.getRawValue().username+'"}',
           60);
-        console.log(this.cookie.getCookie('credentials'))
         this.router.navigate(['/user']);
       },
       error: (err => {

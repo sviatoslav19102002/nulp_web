@@ -34,6 +34,7 @@ export class WalletComponent implements OnInit {
       }
     );
     this.checkWalletCookie();
+    this.checkCredentialsCookie();
 
     this.form = this.formBuilder.group({
       email: '',
@@ -48,6 +49,12 @@ export class WalletComponent implements OnInit {
     }
   }
 
+  checkCredentialsCookie(){
+    if(this.cookie.getCookie('credentials')){
+      this.credentials = JSON.parse(this.cookie.getCookie('credentials'));
+    }
+  }
+
   wallet: {
     name: string,
     amount: string,
@@ -57,7 +64,8 @@ export class WalletComponent implements OnInit {
   credentials: {
     password: string,
     username: string,
-  } = JSON.parse(this.cookie.getCookie('credentials'));
+  } =  {password: '', username: ''}
+    // JSON.parse(this.cookie.getCookie('credentials'));
 
   createWallet() {
     this.http.post(this.API + '/api/v1/wallet', {},{
@@ -70,7 +78,6 @@ export class WalletComponent implements OnInit {
         this.router.navigate(['/']);
       },
       error: (err => {
-        console.log('create waller error')
         if(err.status === 400){
           alert('The user already have the wallet.');
         }
@@ -89,25 +96,18 @@ export class WalletComponent implements OnInit {
         this.router.navigate(['/']);
       },
       error: (err) => {
-        console.log(err.status)
-        console.log('hi, delete error')
         console.log(err);
       }
   });
   }
 
   transfer(): void {
-    console.log(this.form.getRawValue())
     this.http.post(this.API + '/api/v1/transfer',  this.form.getRawValue(),{
       headers: { "Authorization": "Basic " + btoa(this.credentials.username + ':' + this.credentials.password)}
     }).subscribe({
       next: () => {
         this.wallet.amount = String(Number(this.wallet.amount) - Number(this.form.getRawValue().amount))
         this.cookie.setCookie('wallet',JSON.stringify(this.wallet), 60);
-        console.log('transfer ---')
-        console.log(this.cookie.getCookie('wallet'))
-        console.log(this.wallet)
-        console.log('transfer ---')
         this.router.navigate(['/']);
       },
       error: (err => {
@@ -117,7 +117,6 @@ export class WalletComponent implements OnInit {
   }
 
   addMoney(): void {
-    console.log(this.form.getRawValue())
     this.http.put(this.API + '/api/v1/wallet',  {'amount': this.form.getRawValue().amount},{
       headers: { "Authorization": "Basic " + btoa(this.credentials.username + ':' + this.credentials.password)}
     }).subscribe({

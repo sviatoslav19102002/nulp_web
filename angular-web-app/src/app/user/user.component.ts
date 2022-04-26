@@ -21,12 +21,26 @@ export class UserComponent implements OnInit {
     second_name: string,
     username: string,
     email: string
-  } = JSON.parse(this.cookie.getCookie('user'));
+  } = {first_name: '', second_name: '', username: '', email: ''}
+    //JSON.parse(this.cookie.getCookie('user'));
+
+  checkUserCookie(){
+    if(this.cookie.getCookie('user')){
+      this.user = JSON.parse(this.cookie.getCookie('user'));
+    }
+  }
 
   credentials: {
     password: string,
     username: string,
-  } = JSON.parse(this.cookie.getCookie('credentials'));
+  } = {password: '', username: ''}
+    //JSON.parse(this.cookie.getCookie('credentials'));
+
+  checkCredentialsCookie(){
+    if(this.cookie.getCookie('credentials')){
+      this.credentials = JSON.parse(this.cookie.getCookie('credentials'));
+    }
+  }
 
   constructor(
     private cookie: CookieService,
@@ -45,6 +59,9 @@ export class UserComponent implements OnInit {
       password: this.credentials.password
     })
     this.checkAuth();
+
+    this.checkUserCookie();
+    this.checkCredentialsCookie();
   }
 
   checkAuth(){
@@ -57,6 +74,7 @@ export class UserComponent implements OnInit {
 
   changeEditableState(): void {
     this.isEditable = !this.isEditable;
+    this.checkUserCookie();
   }
 
   submit(): void {

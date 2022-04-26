@@ -13,4 +13,14 @@ describe('CookieService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should setCookie', () => {
+    service.setCookie('string', 'string', 70)
+    expect(service).toBeTruthy();
+  });
+
+  it('should clearCookie', () => {
+    service.clearCookie('string')
+    expect(service).toBeTruthy();
+  });
 });
