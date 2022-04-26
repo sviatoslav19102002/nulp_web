@@ -52,15 +52,12 @@ export class NavComponent implements OnInit {
       headers: { "Authorization": "Basic " + btoa(this.credentials.username + ':' + this.credentials.password)}
     }).subscribe({
       next: (data)=>{
-        console.log(data)
         this.cookie.setCookie('wallet',JSON.stringify(data), 60);
-        console.log(JSON.stringify(data))
         EmitterService.walletEmitter.emit(false);
         EmitterService.historyEmitter.emit(true);
       },
       error: (err) => {
         if(err.status === 404){
-          console.log('hi, all')
           EmitterService.walletEmitter.emit(true);
         }
       }

@@ -36,7 +36,6 @@ export class HistoryComponent implements OnInit {
     }).subscribe({
       next: (data)=>{
         this.hist_table = JSON.parse(JSON.stringify(data))
-        console.log(this.hist_table)
       },
       error: (err) => {
         console.log(err)

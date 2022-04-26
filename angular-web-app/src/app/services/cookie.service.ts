@@ -35,8 +35,4 @@ export class CookieService {
     let expires = '; expires=' + date.toUTCString();
     document.cookie = name + '=' + '' + expires + '; path=/';
   }
-
-  getAuthToken() {
-    return this.getCookie('access_token');
-  }
 }

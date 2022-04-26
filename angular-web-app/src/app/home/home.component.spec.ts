@@ -22,4 +22,9 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should ngOnInit', () => {
+    component.ngOnInit()
+    expect(component).toBeTruthy();
+  });
 });
