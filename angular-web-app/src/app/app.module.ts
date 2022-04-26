@@ -11,12 +11,16 @@ import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { WalletComponent } from './wallet/wallet.component';
+import { HistoryComponent } from './history/history.component';
 
 const appRoutes: Routes =[
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'user', component: UserComponent},
-  {path: '', component: HomeComponent}
+  {path: '', component: HomeComponent},
+  {path: 'wallet', component: WalletComponent},
+  {path: 'history', component: HistoryComponent}
 ];
 
 @NgModule({
@@ -26,7 +30,9 @@ const appRoutes: Routes =[
     NavComponent,
     RegisterComponent,
     UserComponent,
-    HomeComponent
+    HomeComponent,
+    WalletComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +41,7 @@ const appRoutes: Routes =[
     HttpClientModule,
     NgbModule
   ],
-  providers: [],
+  providers: [NavComponent, HistoryComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

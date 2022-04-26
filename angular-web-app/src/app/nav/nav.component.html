@@ -18,7 +18,13 @@
           <a class="nav-link" routerLink="/user">Account</a>
         </li>
         <li *ngIf="authenticated" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <a class="nav-link" routerLink="/wallet" (click)="checkCred()">Wallet</a>
+        </li>
+        <li *ngIf="authenticated" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
           <a class="nav-link" (click)="logout()">Logout</a>
+        </li>
+        <li *ngIf="authenticated && transfer_history" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <a class="nav-link" routerLink="/history">Transfer History</a>
         </li>
       </ul>
       <form class="d-flex">
