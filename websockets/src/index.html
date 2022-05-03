@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BChat</title>
+    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+<div class="modal" id="registration">
+    <div class="modal-container">
+        <div class="modal-left">
+            <h1 class="modal-title">Welcome</h1>
+            <p class="modal-desc">Chat on!</p>
+            <div class="input-block">
+                <label for="username" class="input-label">Username</label>
+                <input type="text" name="username" id="username" placeholder="Username" required>
+            </div>
+            <div class="modal-buttons">
+                <button class="input-button" type="submit" id="form_button">Sign Up</button>
+            </div>
+        </div>
+        <div class="modal-right">
+            <img src="https://images.unsplash.com/photo-1456743625079-86a97ff8bc86?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80"
+                 alt="">
+        </div>
+    </div>
+</div>
+
+<div id="chat" class="container">
+    <p class="msg">Messages:</p>
+    <div id="messages" class="messages"></div>
+
+    <form id="input_container" class="msgForm">
+        <input class="input" type="text" id="inputBox" placeholder="Send message..."/>
+        <input type="submit" id="send_button" disabled value="Send" class="btn">
+    </form>
+</div>
+<script src="chat.js"></script>
+</body>
+</html>
