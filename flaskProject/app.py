@@ -8,12 +8,7 @@ from flask_bcrypt import Bcrypt
 import sys
 from flask_cors import CORS
 
-# sys.path.append(
-#     'C://Users//Sviatoslav Oliinyk//Desktop//NULPSecondCourse//PP//lab8//nulp_python//poetry-demo//Migrations')
 from Migrations.main import Session, User, Wallet, Transfer
-
-# sys.path.append(
-#     'C://Users//Sviatoslav Oliinyk//Desktop//NULPSecondCourse//PP//lab8//nulp_python//poetry-demo//poetry_demo')
 from validation_check import UserSchema, WalletSchema, TransferSchema
 from waitress import serve
 from marshmallow import ValidationError
@@ -93,12 +88,6 @@ def register():
 @app.route('/api/v1/user/get', methods=['GET'])
 @auth.login_required
 def get_user():
-    # Get data from request body
-    # data = request.get_json()
-
-    # if (auth.username() != data['username']):
-    #     return Response(status=406, response='Access denied')
-
     # Check if user exists
     db_user = session.query(User).filter_by(username=auth.username()).first()
     if not db_user:
@@ -160,11 +149,6 @@ def update_user():
 @app.route('/api/v1/user/delete', methods=['DELETE'])
 @auth.login_required
 def delete_user():
-    # Get data from request body
-    # data = request.get_json()
-    # print(data)
-    # if (auth.username() != data['username']):
-    #     return Response(status=406, response='Access denied')
     # Check if user exists
     db_user = session.query(User).filter_by(username=auth.username()).first()
     if not db_user:
@@ -179,27 +163,7 @@ def delete_user():
 @app.route('/api/v1/wallet', methods=['POST'])
 @auth.login_required
 def create_wallet():
-    # Get data from request body
-    # data = request.get_json()
     user = session.query(User).filter_by(username=auth.username()).first()
-    # if (user.id != data['owner_id']):
-    #     return Response(status=406, response='Access denied')
-    # Validate input data
-    # try:
-    #     WalletSchema().load(data)
-    # except ValidationError as err:
-    #     return jsonify(err.messages), 400
-
-    # Check if wallet already exists
-    # exists = session.query(Wallet.id).filter_by(name=data['name']).first()
-    # if exists:
-    #     return Response(status=400, response='Wallet with such name already exists.')
-
-    # Check if username already exists
-    # exists2 = session.query(User.id).filter_by(id=data['owner_id']).first()
-    # if not exists2:
-    #     return Response(status=400, response='There is not user with such ID.')
-
     wallet = session.query(Wallet).filter_by(owner_id=user.id).first()
     if wallet:
         return Response(status=400, response='The user already have the wallet.')
@@ -221,12 +185,6 @@ def get_wallet():
     db_wallet = session.query(Wallet).filter_by(owner_id=user.id).first()
     if not db_wallet:
         return Response(status=404, response='There is no wallet for this user.')
-
-    # user = session.query(User).filter_by(username=auth.username).first()
-    # if (user.id != db_wallet.owner_id):
-    #     return Response(status=406, response='Access denied')
-    # Return wallet data
-    # db_user = session.query(User).filter_by(id=db_wallet.owner_id).first()
     wallet_data = {'name': db_wallet.name, 'amount': db_wallet.amount, 'owner_id': db_wallet.owner_id}
     return jsonify(wallet_data)
 
@@ -236,13 +194,6 @@ def get_wallet():
 def update_wallet():
     data = request.get_json()
     user = session.query(User).filter_by(username=auth.username()).first()
-    # if (user.id != data['owner_id']):
-    #     return Response(status=406, response='Access denied')
-    # Validate input data
-    # try:
-    #     WalletSchema().load(data)
-    # except ValidationError as err:
-    #     return jsonify(err.messages), 400
 
     # Check if wallet exists
     db_wallet = session.query(Wallet).filter_by(owner_id=user.id).first()
@@ -269,8 +220,6 @@ def update_wallet():
     # Save changes
     session.commit()
 
-    # Return new wallet data
-    # db_user = session.query(User).filter_by(id=db_wallet.owner_id).first()
     wallet_data = {'name': db_wallet.name, 'amount': db_wallet.amount, 'owner_id': db_wallet.owner_id}
     return jsonify(wallet_data)
 
@@ -287,8 +236,7 @@ def delete_wallet():
         return Response(status=404, response='A wallet with provided name was not found.')
     if not user:
         return Response(status=405, response='A wallet with provided name was not found.')
-    # if (user.id != db_wallet.owner_id):
-    #     return Response(status=406, response='Access denied')
+
     # Delete wallet
     session.delete(db_wallet)
     session.commit()
@@ -303,21 +251,8 @@ def delete_wallet():
 def create_transfer():
     data = request.get_json()
 
-    # Validate input data
-    # try:
-    #     TransferSchema().load(data)
-    # except ValidationError as err:
-    #     return jsonify(err.messages), 400
-
     user_from = session.query(User).filter_by(username=auth.username()).first()
     user_to = session.query(User).filter_by(email=data['email']).first()
-    # wallet = session.query(Wallet).filter_by(owner_id=user.id).first()
-    # if (user.id != wallet.owner_id):
-    #     return Response(status=406, response='Access denied')
-
-    # Check if from and to wallets are not the same
-    # if data['fr0m_id'] == data['to_id']:
-    #     return Response(status=400, response='You can not send money to the same wallet.')
 
     # Check if wallets exists
     wallet_from = session.query(Wallet).filter_by(owner_id=user_from.id).first()
@@ -357,24 +292,8 @@ def get_transfer():
             amount *= -1
         res = {'purpose': purpose, 'amount': amount}
         res_tr.append(res)
+
     return jsonify(res_tr), 200
-    #
-    # if not wallet_from or not wallet_to:
-    #     return Response(status=401, response='Wallet with such id does not exist.')
-    #
-    # if int(data['amount']) > int(wallet_from.amount):
-    #     return Response(status=402, response='There is not necessary amount of money.')
-    #
-    # transfer = Transfer(purpose=data['purpose'], amount=data['amount'], fr0m_id=wallet_from.id, to_id=wallet_to.id)
-    #
-    # session.add(transfer)
-    #
-    # wallet_from.amount -= int(data['amount'])
-    # wallet_to.amount += int(data['amount'])
-    #
-    # session.commit()
-    #
-    # return Response(status=200)
 
 
 serve(app, host='0.0.0.0', port=8080, threads=1)  # WAITRESS!
