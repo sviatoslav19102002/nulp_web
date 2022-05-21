@@ -32,15 +32,7 @@ def verify_password(username, password):
         return None
 
 
-@app.route('/')
-@auth.login_required
-def myendpoint():
-    status_code = flask.Response(status=200, response="Hello World 15")
-    return status_code
-
-
 @app.route('/api/v1/auth/login', methods=['POST'])
-# @auth.login_required
 def login():
     # Get data from request body
     data = request.get_json()

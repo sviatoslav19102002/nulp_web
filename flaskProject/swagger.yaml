@@ -20,22 +20,13 @@ security:
   - basicAuth: []
 
 paths:
-  /user/{username}:
+  /user/get:
     get:
       tags:
       - user
       summary: Get user
       description: Get information about user
       operationId: getUserByUsername
-      parameters:
-      - name: username
-        in: path
-        description: 'The name that needs to be fetched'
-        required: true
-        schema:
-          type: string
-          example: "username"
-
       responses:
         200:
           description: "Successful operation"
@@ -46,22 +37,13 @@ paths:
         401:
           $ref: '#/components/responses/InvalidCredentialsError'
 
-
+  /user/put:
     put:
       tags:
       - user
       summary: Update user
       description: Update your user
       operationId: updateUserByUsername
-
-      parameters:
-      - name: username
-        in: path
-        required: true
-        description: "The name that needs to be fetched"
-        schema:
-          type: string
-
       requestBody:
         description: Updated user object
         content:
@@ -80,22 +62,13 @@ paths:
         401:
           $ref: '#/components/responses/InvalidCredentialsError'
 
-
+  /user/delete:
     delete:
       tags:
         - user
       summary: Delete user
       description: Delete user by username
       operationId: deleteUser
-
-      parameters:
-      - name: username
-        in: path
-        required: true
-        description: "The name that needs to be fetched"
-        schema:
-          type: string
-
       responses:
         200:
           description: "Successful operation. User was deleted"
@@ -139,21 +112,11 @@ paths:
           description: Can't create wallet
 
 
-  /wallet/{name}:
     get:
       tags:
       - wallet
       summary: Get a wallet by name
       operationId: getWalletByName
-
-      parameters:
-      - name: name
-        in: path
-        required: true
-        description: "The name that needs to be fetched"
-        schema:
-          type: string
-
       responses:
         200:
           description: "Successful operation"
@@ -172,14 +135,6 @@ paths:
       - wallet
       summary: Update a wallet by name
       operationId: updateWalletByName
-
-      parameters:
-      - name: name
-        in: path
-        required: true
-        description: "The name that needs to be fetched"
-        schema:
-          type: string
 
       requestBody:
         description: Updated wallet object
@@ -209,14 +164,6 @@ paths:
       - wallet
       summary: Delete wallet by name
       operationId: deleteWalletByName
-
-      parameters:
-      - name: name
-        in: path
-        required: true
-        description: "The name that needs to be fetched"
-        schema:
-          type: string
 
       responses:
         200:
@@ -255,6 +202,24 @@ paths:
                 $ref: '#/components/schemas/Transfer'
         401:
           $ref: '#/components/responses/UnauthorizedError'
+          
+          
+    get:
+      tags:
+      - transfer
+      summary: Get a transfer by wallet id
+      operationId: getTransfer
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transfer'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: Wallet is not found.
 
 
   /auth/register:
@@ -320,20 +285,6 @@ paths:
       security: []
 
 
-  /auth/logout:
-    post:
-      tags:
-      - auth
-      summary: Logs current user out of session
-      operationId: logoutUser
-
-      responses:
-        200:
-          description: "Successful operation"
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
-
-
 components:
   schemas:
     User:
@@ -388,7 +339,7 @@ components:
 
   responses:
     UnauthorizedError:
-      description: "JWT token was not provided or it is invalid"
+      description: "Basic auth is failed"
     InvalidCredentialsError:
       description: "Provided credentials are invalid"
     IncorrectStructureError:
