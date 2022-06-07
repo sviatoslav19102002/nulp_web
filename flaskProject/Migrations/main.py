@@ -1,7 +1,4 @@
-# coding=utf-8
-
 from sqlalchemy import Integer, String, Column, ForeignKey
-
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import relationship, sessionmaker, scoped_session
@@ -17,8 +14,6 @@ metadata = Base.metadata
 
 Base = declarative_base()
 
-
-# Cтворення основних класів(таблиць)
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
@@ -33,11 +28,11 @@ class Transfer(Base):
     __tablename__ = 'transfer'
     id = Column(Integer, primary_key=True)
     purpose = Column(String(100), nullable=False)
-    fr0m_id = Column(Integer, ForeignKey('wallet.id'), nullable=False)
+    from_id = Column(Integer, ForeignKey('wallet.id'), nullable=False)
     to_id = Column(Integer, ForeignKey('wallet.id'), nullable=False)
     amount = Column(Integer, nullable=False)
-    fr0m = relationship("Wallet", foreign_keys=[fr0m_id])
-    to = relationship("Wallet", foreign_keys=[to_id])
+    from_x = relationship("Wallet", foreign_keys=[from_id])
+    to_x = relationship("Wallet", foreign_keys=[to_id])
 
 
 class Wallet(Base):

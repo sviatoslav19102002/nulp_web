@@ -7,7 +7,6 @@ from flask import Flask, request, Response, jsonify
 from flask_bcrypt import Bcrypt
 import sys
 from flask_cors import CORS
-
 from Migrations.main import Session, User, Wallet, Transfer
 from validation_check import UserSchema, WalletSchema, TransferSchema
 from waitress import serve
@@ -21,7 +20,6 @@ bcrypt = Bcrypt()
 auth = HTTPBasicAuth()
 
 
-# currentUser=[]
 @auth.verify_password
 def verify_password(username, password):
     try:
@@ -32,7 +30,15 @@ def verify_password(username, password):
         return None
 
 
+@app.route('/')
+@auth.login_required
+def myendpoint():
+    status_code = flask.Response(status=200, response="Hello World 15")
+    return status_code
+
+
 @app.route('/api/v1/auth/login', methods=['POST'])
+# @auth.login_required
 def login():
     # Get data from request body
     data = request.get_json()
@@ -80,11 +86,8 @@ def register():
 @app.route('/api/v1/user/get', methods=['GET'])
 @auth.login_required
 def get_user():
-    # Check if user exists
+    # Get data from DB
     db_user = session.query(User).filter_by(username=auth.username()).first()
-    if not db_user:
-        return Response(status=404, response='A user with provided username was not found.')
-
     # Return user data
     user_data = {'id': db_user.id, 'first_name': db_user.first_name, 'second_name': db_user.second_name,
                  'username': db_user.username, 'email': db_user.email}
@@ -177,6 +180,7 @@ def get_wallet():
     db_wallet = session.query(Wallet).filter_by(owner_id=user.id).first()
     if not db_wallet:
         return Response(status=404, response='There is no wallet for this user.')
+
     wallet_data = {'name': db_wallet.name, 'amount': db_wallet.amount, 'owner_id': db_wallet.owner_id}
     return jsonify(wallet_data)
 
@@ -211,7 +215,6 @@ def update_wallet():
 
     # Save changes
     session.commit()
-
     wallet_data = {'name': db_wallet.name, 'amount': db_wallet.amount, 'owner_id': db_wallet.owner_id}
     return jsonify(wallet_data)
 
@@ -245,6 +248,8 @@ def create_transfer():
 
     user_from = session.query(User).filter_by(username=auth.username()).first()
     user_to = session.query(User).filter_by(email=data['email']).first()
+    if not user_to:
+        return Response(status=403, response="User doesn't exist")
 
     # Check if wallets exists
     wallet_from = session.query(Wallet).filter_by(owner_id=user_from.id).first()
@@ -256,7 +261,7 @@ def create_transfer():
         return Response(status=402, response='There is not necessary amount of money.')
 
     # Create new transfer
-    transfer = Transfer(purpose=data['purpose'], amount=data['amount'], fr0m_id=wallet_from.id, to_id=wallet_to.id)
+    transfer = Transfer(purpose=data['purpose'], amount=data['amount'], from_id=wallet_from.id, to_id=wallet_to.id)
 
     # Add new transfer to db
     session.add(transfer)
@@ -275,16 +280,15 @@ def get_transfer():
     user = session.query(User).filter_by(username=auth.username()).first()
     wallet = session.query(Wallet).filter_by(owner_id=user.id).first()
 
-    transfer = session.query(Transfer).filter((Transfer.fr0m_id == wallet.id) | (Transfer.to_id == wallet.id)).all()
+    transfer = session.query(Transfer).filter((Transfer.from_id == wallet.id) | (Transfer.to_id == wallet.id)).all()
     res_tr = []
     for tr in transfer:
         purpose = tr.purpose
         amount = tr.amount
-        if(wallet.id == tr.fr0m_id):
+        if(wallet.id == tr.from_id):
             amount *= -1
         res = {'purpose': purpose, 'amount': amount}
         res_tr.append(res)
-
     return jsonify(res_tr), 200
 
 
