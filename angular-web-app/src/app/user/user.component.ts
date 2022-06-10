@@ -21,8 +21,7 @@ export class UserComponent implements OnInit {
     second_name: string,
     username: string,
     email: string
-  } = {first_name: '', second_name: '', username: '', email: ''}
-    //JSON.parse(this.cookie.getCookie('user'));
+  } = JSON.parse(this.cookie.getCookie('user'));
 
   checkUserCookie(){
     if(this.cookie.getCookie('user')){
@@ -33,8 +32,7 @@ export class UserComponent implements OnInit {
   credentials: {
     password: string,
     username: string,
-  } = {password: '', username: ''}
-    //JSON.parse(this.cookie.getCookie('credentials'));
+  } = JSON.parse(this.cookie.getCookie('credentials'));
 
   checkCredentialsCookie(){
     if(this.cookie.getCookie('credentials')){
@@ -48,6 +46,10 @@ export class UserComponent implements OnInit {
     private http: HttpClient,
     private router: Router
   ) {
+  }
+
+  getCookieVariable() {
+    return this.cookie
   }
 
   ngOnInit(): void {
@@ -77,13 +79,13 @@ export class UserComponent implements OnInit {
     this.checkUserCookie();
   }
 
-  submit(): void {
-    this.http.put(this.API + '/api/v1/user/put', this.form.getRawValue(), {
+    submit(): void {
+      this.http.put(this.API + '/api/v1/user/put', this.form.getRawValue(), {
       headers: { "Authorization": "Basic " + btoa(this.credentials.username + ':' + this.credentials.password)}
     }).subscribe({
       next: ()=>{
         this.user = this.form.getRawValue();
-        this.cookie.setCookie('user',JSON.stringify(this.user), 60);
+        this.cookie.setCookie('user', JSON.stringify(this.user), 60);
         this.router.navigate(['/']);
       },
       error: (err => {

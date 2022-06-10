@@ -17,6 +17,7 @@
         <label for="purpose" class="form-label mt-4">Purpose</label>
         <input formControlName="purpose" type="text" class="form-control" id="purpose" placeholder="Enter purpose">
       </div>
+      <p *ngIf="!addMoneyVar" class="form__message"> {{ errorMessage }} </p>
       <br>
       <div *ngIf="addMoneyVar" class="d-grid gap-2">
         <button type="button" class="btn btn-primary" (click)="addMoney()">Add</button>

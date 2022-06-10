@@ -11,6 +11,7 @@ import {CookieService} from "../services/cookie.service";
 })
 export class LoginComponent implements OnInit {
   form: FormGroup = {} as FormGroup;
+  errorMessage: string = '';
 
   constructor(private formBuilder: FormBuilder,
               private auth: AuthorizationService,
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
       },
       error: (err => {
         if(err.status === 404){
-          alert('Wrong Data');
+          this.errorMessage = 'You entered incorrect data!';
         }
       })
     });

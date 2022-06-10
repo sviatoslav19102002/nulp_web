@@ -12,6 +12,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
   styleUrls: ['./wallet.component.css']
 })
 export class WalletComponent implements OnInit {
+  errorMessage: string = '';
   addMoneyVar: boolean = false
   form: FormGroup = {} as FormGroup;
   walletHaving: boolean = false;
@@ -111,7 +112,9 @@ export class WalletComponent implements OnInit {
         this.router.navigate(['/']);
       },
       error: (err => {
-        console.log('transfer error')
+        if(err.status === 403){
+          this.errorMessage = "User doesn't exist"
+        }
       })
     });
   }
