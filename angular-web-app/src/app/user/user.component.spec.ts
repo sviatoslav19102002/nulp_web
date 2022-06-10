@@ -20,15 +20,7 @@ describe('UserComponent', () => {
     let cookie = new CookieService();
     let value_credentials = {password: 'string', username: 'string'};
     let value_user = {first_name: 'string', second_name: 'string', username: 'string', email: 'string'};
-    // let minutes = 60
-    // let expires = '';
-    // if (minutes) {
-    //   let date = new Date();
-    //   date.setTime(date.getTime() + minutes * 60 * 1000);
-    //   expires = '; expires=' + date.toUTCString();
-    // }
-    // document.cookie = 'user' + '=' + (value_user || '') + expires + '; path=/';
-    // document.cookie = 'credentials' + '=' + (value_credentials || '') + expires + '; path=/';
+    
     cookie.setCookie('user', JSON.stringify(value_user), 60);
     cookie.setCookie('credentials', JSON.stringify(value_credentials), 60);
   });
